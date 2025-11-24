@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Security Operations Center</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="login-container" id="loginContainer">
+        <div class="login-bg"></div>
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="shield">🛡️</div>
+                <h1 class="login-title">One Step Security Operations Center</h1>
+                <p class="login-subtitle">Advanced Threat Monitoring System</p>
+            </div>
+            <form class="login-form" id="loginForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input" id="username" placeholder="Input ID" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" id="password" placeholder="••••••••" required>
+                </div>
+                
+                <div class="mfa-container" id="mfaContainer">
+                    <div class="mfa-title">Enter verification code</div>
+                    <div class="mfa-code-inputs">
+                        <input type="text" class="mfa-input" maxlength="1" data-index="0">
+                        <input type="text" class="mfa-input" maxlength="1" data-index="1">
+                        <input type="text" class="mfa-input" maxlength="1" data-index="2">
+                        <input type="text" class="mfa-input" maxlength="1" data-index="3">
+                        <input type="text" class="mfa-input" maxlength="1" data-index="4">
+                        <input type="text" class="mfa-input" maxlength="1" data-index="5">
+                    </div>
+                </div>
+                <button type="submit" class="btn-login" id="btnLogin">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <div class="toast-icon">!</div>
+        <div class="toast-message" id="toastMessage">Notification</div>
+    </div>
+    
+    <script type="text/javascript" src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
