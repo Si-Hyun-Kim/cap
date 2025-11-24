@@ -1,3 +1,6 @@
+const API_BASE = `${window.location.protocol}//${window.location.hostname}:8000`;
+
+
 // Global variables
 let charts = {
     attack: null,
@@ -145,23 +148,23 @@ function connectWebSocket() {
 
 // --- AJAX (Fetch) Helper ---
 async function apiFetch(url, options = {}) {
-    try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-        }
-        // DELETE는 204 No Content를 반환할 수 있음
-        if (response.status === 204) {
-            return { success: true };
-        }
-        return await response.json();
-    } catch (error) {
-        console.error('API Fetch Error:', error);
-        showToast(error.message || 'Network error', 'error');
-        return null;
-    }
+    try {
+        const fullUrl = url.startsWith('http')
+            ? url
+            : `${API_BASE}${url}`;
+
+        const response = await fetch(fullUrl, options);
+
+        if (!response.ok)
+            throw new Error(`HTTP ${response.status}`);
+
+        return await response.json();
+    } catch (err) {
+        console.error("API Error:", err);
+        throw err;
+    }
 }
+
 
 // --- 인증 ---
 // ... (handleLogin, verifyMFA 함수는 기존과 동일) ...

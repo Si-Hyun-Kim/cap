@@ -165,6 +165,27 @@ mkdir -p logs pids
 echo -e "${GREEN}✓ logs/, pids/ 디렉토리 생성${NC}"
 echo ""
 
+# 8. 대시보드 설정
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${BLUE}[8/8] 웹 대시보드 설정...${NC}"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+
+if [ -d "device1/dashboard" ]; then
+    echo -e "  ${GREEN}✓${NC} 대시보드 디렉토리 존재"
+    
+    # flask-login 설치 (추가 패키지)
+    cd device1
+    source venv/bin/activate
+    pip install flask-login --quiet
+    deactivate
+    cd ..
+    
+    echo -e "  ${GREEN}✓${NC} 대시보드 패키지 설치 완료"
+else
+    echo -e "  ${YELLOW}⚠${NC} dashboard 디렉토리가 없습니다"
+    echo -e "  ${YELLOW}💡 수동으로 대시보드 파일을 복사하세요${NC}"
+fi
+
 # config.json 확인
 if [ ! -f "config.json" ]; then
     echo -e "${YELLOW}⚠ config.json 생성 중...${NC}"
@@ -214,8 +235,8 @@ echo -e "  ${CYAN}1. 서비스 시작:${NC}"
 echo -e "     cd $PROJECT_ROOT"
 echo -e "     ./scripts/start_device1.sh"
 echo ""
-echo -e "  ${CYAN}2. 연결 테스트:${NC}"
-echo -e "     ./scripts/check_connection.sh"
+echo -e "  ${YELLOW}2. ${NC} 대시보드 접속: ${GREEN}http://192.168.0.42:8080${NC}"
+echo -e "  ${YELLOW}3. ${NC} 로그인: ${GREEN}admin / admin${NC}"
 echo ""
 echo -e "${YELLOW}⚠️  중요: 장치 2 (192.168.0.14)도 설정해야 합니다!${NC}"
 echo ""

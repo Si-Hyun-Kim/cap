@@ -146,3 +146,63 @@ if __name__ == '__main__':
     print("=" * 60)
     
     app.run(host='0.0.0.0', port=8000, debug=False)
+
+
+@app.route('/api/stats', methods=['GET'])
+def get_stats():
+    """대시보드 통계"""
+    try:
+        # eve.json에서 최근 24시간 데이터 집계
+        # (간단한 예시)
+        return jsonify({
+            "total_alerts_24h": 150,
+            "blocked_attacks_24h": 120,
+            "critical_alerts_24h": 25,
+            "active_rules_count": 50,
+            "severity_distribution": {
+                "critical": 25,
+                "high": 45,
+                "medium": 50,
+                "low": 30
+            }
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/timeline', methods=['GET'])
+def get_timeline():
+    """시간대별 타임라인"""
+    hours = request.args.get('hours', 24, type=int)
+    
+    # 실제로는 eve.json 파싱해서 시간대별 집계
+    timeline = [
+        {"time": f"{h:02d}:00", "count": random.randint(5, 20)}
+        for h in range(24)
+    ]
+    
+    return jsonify({"timeline": timeline})
+
+@app.route('/api/rules', methods=['GET'])
+def get_rules():
+    """활성 룰 목록"""
+    category = request.args.get('category', 'all')
+    
+    # Suricata 룰 파일 읽기
+    rules = []
+    rules_dir = "/etc/suricata/rules"
+    
+    try:
+        for file in os.listdir(rules_dir):
+            if file.endswith('.rules'):
+                with open(os.path.join(rules_dir, file), 'r') as f:
+                    for line in f:
+                        if line.startswith('alert') or line.startswith('drop'):
+                            rules.append({
+                                "rule": line.strip(),
+                                "file": file,
+                                "category": "unknown"
+                            })
+        
+        return jsonify({"rules": rules, "total": len(rules)})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

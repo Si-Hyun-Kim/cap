@@ -114,6 +114,25 @@ else
     echo -e "       ${RED}✗ 시작 실패 - logs/flow_extractor.log 확인${NC}"
 fi
 
+# 5. 대시보드 시작
+echo -e "${GREEN}[▶ 5/5] Flask 대시보드 (포트 8080)${NC}"
+
+if [ ! -f "dashboard/app.py" ]; then
+    echo -e "  ${RED}✗${NC} dashboard/app.py 없음!"
+else
+    nohup python3 dashboard/app.py > logs/dashboard.log 2>&1 &
+    DASHBOARD_PID=$!
+    echo $DASHBOARD_PID > .pids/dashboard.pid
+    sleep 2
+    
+    if ps -p $DASHBOARD_PID > /dev/null 2>&1; then
+        echo -e "  ${GREEN}✓${NC} 대시보드 실행 중 (PID: $DASHBOARD_PID)"
+        echo -e "  ${CYAN}URL: http://192.168.0.42:8080${NC}"
+    else
+        echo -e "  ${RED}✗${NC} 시작 실패"
+    fi
+fi
+
 echo ""
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "${GREEN}✅ 장치 1 시작 완료!${NC}"
@@ -131,3 +150,11 @@ echo -e "  ${CYAN}../scripts/stop_device1.sh${NC}"
 echo ""
 echo -e "${YELLOW}⚠️  주의: 장치 2도 시작해야 시스템이 작동합니다!${NC}"
 echo ""
+
+echo ""
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "${BLUE}🌐 접속 정보${NC}"
+echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo -e "  API       : ${GREEN}http://192.168.0.42:8000${NC}"
+echo -e "  대시보드  : ${GREEN}http://192.168.0.42:8080${NC}"
+echo -e "  로그인    : ${YELLOW}admin / admin${NC}"

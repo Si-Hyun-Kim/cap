@@ -448,6 +448,37 @@ async def on_startup():
     """
     asyncio.create_task(tail_eve_json_file())
 
+# =============================
+# Compatibility API for Frontend
+# =============================
+
+@app.get("/api/get-stats")
+async def get_stats_compat():
+    # 기존 함수 호출
+    return await get_stats_overview()
+
+
+@app.get("/api/get-timeline")
+async def get_timeline_compat(hours: int = 24):
+    return await get_stats_timeline(hours=hours)
+
+
+@app.get("/api/get-recent-alerts")
+async def get_recent_alerts_compat():
+    # 최근 50개
+    return await get_suricata_logs(count=50)
+
+
+@app.get("/api/get-alerts")
+async def get_alerts_compat(count: int = 50, severity: str = "all"):
+    return await get_suricata_logs(count=count, severity=severity)
+
+
+@app.get("/api/get-rules")
+async def get_rules_compat(category: str = "all"):
+    return await get_active_rules(category=category)
+
+
 
 if __name__ == "__main__":
     import uvicorn
