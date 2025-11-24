@@ -170,7 +170,7 @@ echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━�
 echo -e "${BLUE}[8/8] 웹 대시보드 설정...${NC}"
 echo -e "${CYAN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 
-if [ -d "device1/dashboard" ]; then
+if [ -d "dashboard" ]; then
     echo -e "  ${GREEN}✓${NC} 대시보드 디렉토리 존재"
     
     # flask-login 설치 (추가 패키지)
