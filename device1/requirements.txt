@@ -1,0 +1,11 @@
+# 장치 1 (Suricata 서버) Python 패키지
+
+# Flask (API 서버)
+flask==3.0.0
+flask-cors==4.0.0
+
+# HTTP 클라이언트
+requests==2.31.0
+
+# 로깅
+python-json-logger==2.0.7

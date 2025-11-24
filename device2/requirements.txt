@@ -1,0 +1,22 @@
+# 장치 2 (LLM 서버) Python 패키지
+
+# Flask (Flow Receiver)
+flask==3.0.0
+
+# ML 모델
+scikit-learn==1.3.2
+joblib==1.3.2
+numpy==1.24.3
+pandas==2.1.4
+
+# MCP
+mcp==1.1.2
+
+# OpenAI (Ollama 호환)
+openai==1.12.0
+
+# HTTP 클라이언트
+requests==2.31.0
+
+# 로깅
+python-json-logger==2.0.7

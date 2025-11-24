@@ -1,0 +1,37 @@
+{
+  "device_id": "device1",
+  "device_name": "Suricata 서버",
+  "ip_address": "192.168.0.42",
+  
+  "suricata": {
+    "eve_log_path": "/var/log/suricata/eve.json",
+    "socket_path": "/var/run/suricata/suricata-command.socket",
+    "rules_path": "/etc/suricata/rules"
+  },
+  
+  "services": {
+    "api": {
+      "host": "0.0.0.0",
+      "port": 8000,
+      "debug": false
+    },
+    "relay": {
+      "host": "0.0.0.0",
+      "port": 10001
+    },
+    "rule_client": {
+      "host": "0.0.0.0",
+      "port": 10002
+    }
+  },
+  
+  "flow_extractor": {
+    "min_flow_age": 5,
+    "device2_url": "http://192.168.0.14:5001/receive-flow"
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s [%(levelname)s] %(message)s"
+  }
+}

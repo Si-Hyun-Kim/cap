@@ -1,0 +1,46 @@
+{
+  "device_id": "device2",
+  "device_name": "LLM 서버",
+  "ip_address": "192.168.0.14",
+  
+  "ml_models": {
+    "model_path": "models/random_forest_model.joblib",
+    "scaler_path": "models/min_max_scaler.joblib",
+    "encoder_path": "models/label_encoder.joblib",
+    "features_path": "models/feature_names.joblib"
+  },
+  
+  "ollama": {
+    "base_url": "http://localhost:11434",
+    "api_url": "http://localhost:11434/api/generate",
+    "model": "qwen2.5:7b",
+    "timeout": 30,
+    "temperature": 0.1
+  },
+  
+  "device1": {
+    "api_url": "http://192.168.0.42:8000",
+    "rule_client_url": "http://192.168.0.42:10002"
+  },
+  
+  "flow_receiver": {
+    "host": "0.0.0.0",
+    "port": 5001,
+    "debug": false
+  },
+  
+  "mcp": {
+    "server_script": "mcp_server.py",
+    "auto_defense_interval": 10
+  },
+  
+  "rules": {
+    "starting_sid": 900000001,
+    "confidence_threshold": 0.7
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s [%(levelname)s] %(message)s"
+  }
+}
