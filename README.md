@@ -281,6 +281,103 @@ Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
 .\scripts\setup_device2.ps1
 ```
 
+##### 만약 setup_device2.ps1에 오류가 생긴다면, 수동으로 설치
+###### 1. Python 확인
+
+```shell
+python --version
+# 없으면: https://www.python.org/downloads/ 에서 설치
+```
+
+###### 2. Ollama 확인
+
+```shell
+ollama --version
+# 없으면: https://ollama.com/download/windows 에서 설치
+```
+
+###### 3. device2로 이동
+
+```shell
+cd device2
+```
+###### 4. 가상환경 생성
+
+```shell
+python -m venv venv
+```
+
+###### 5. 가상환경 활성화
+
+```shell
+.\venv\Scripts\Activate.ps1
+```
+
+###### 6. pip 업그레이드
+
+```shell
+python -m pip install --upgrade pip
+```
+
+###### 7. 패키지 설치
+
+```shell
+pip install flask scikit-learn joblib numpy pandas mcp openai requests python-json-logger
+```
+
+###### 8. Qwen 2.5 다운로드
+
+```shell
+ollama pull qwen2.5:7b
+```
+
+###### 9. 디렉토리 생성
+
+```shell
+mkdir models
+mkdir logs
+mkdir pids
+mkdir data
+```
+
+###### 10. config.json 생성
+
+```shell
+notepad config.json
+```
+
+📄 config.json 내용 (수동 생성)
+
+```json
+{
+  "device_id": "device2",
+  "ip_address": "192.168.0.14",
+  "ml_models": {
+    "model_path": "models\\random_forest_model.joblib",
+    "scaler_path": "models\\min_max_scaler.joblib",
+    "encoder_path": "models\\label_encoder.joblib",
+    "features_path": "models\\feature_names.joblib"
+  },
+  "ollama": {
+    "base_url": "http://localhost:11434",
+    "model": "qwen2.5:7b",
+    "timeout": 30
+  },
+  "device1": {
+    "api_url": "http://192.168.0.42:8000",
+    "rule_client_url": "http://192.168.0.42:10002"
+  },
+  "flow_receiver": {
+    "host": "0.0.0.0",
+    "port": 5001
+  },
+  "rules": {
+    "starting_sid": 900000001,
+    "confidence_threshold": 0.7
+  }
+}
+```
+
 #### 4단계: CICIDS2017 데이터셋 준비
 ```powershell
 # 다운로드: https://www.unb.ca/cic/datasets/ids-2017.html
